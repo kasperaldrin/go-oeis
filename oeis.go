@@ -1,11 +1,9 @@
 package oeis
 
 import (
+	"iter"
 	"kasperaldrin/oeis/pkg/models"
-	"kasperaldrin/oeis/pkg/services"
 	"net/http"
-	"os"
-	"path/filepath"
 	"time"
 )
 
@@ -27,6 +25,8 @@ type OEISClientConfig struct {
 type OEISClient interface {
 	Search(query string) ([]*models.OEISSequence, error)
 	Get(id string) (*models.OEISSequence, error)
+	NewSequenceIterator() (*SequenceIterator, error)
+	Sequences() iter.Seq2[*models.OEISSequence, error]
 }
 
 // OnlineClient is a client that uses the online database
@@ -45,6 +45,7 @@ func (c *OnlineClient) Get(id string) (*models.OEISSequence, error) {
 	return nil, nil
 }
 
+// -------------- OFFLINE CLIENT -----------------------------------------------------------------
 // OfflineClient is a client that uses a local dataset
 type OfflineClient struct {
 	OfflinePath string // Path to the offline dataset
@@ -57,18 +58,11 @@ func (c *OfflineClient) Search(query string) ([]*models.OEISSequence, error) {
 
 // Get retrieves a sequence by its ID
 func (c *OfflineClient) Get(id string) (*models.OEISSequence, error) {
-
-	// The folder is the first 4 characters of the ID
-	folder := id[:4]
-
-	filePath := filepath.Join(c.OfflinePath, "seq", folder, id+".seq")
-
-	f, err := os.Open(filePath)
+	filePath, err := seqFilePath(c.OfflinePath, id)
 	if err != nil {
 		return nil, err
 	}
-	defer f.Close()
-	return services.ParseOEIS(f)
+	return parseSeqFile(filePath)
 }
 
 // NewClient creates a new OEIS client based on the configuration

@@ -20,6 +20,14 @@ func main() {
 	fmt.Println(seq.ID, seq.Name)
 	fmt.Println("Terms:", seq.Sequence[:10])
 	fmt.Println("Keywords:", seq.Keywords)
+	fmt.Println("Programs:", seq.Programs[0].Language, "\n", seq.Programs[0].Code)
+
+	for seq, err := range client.Sequences() {
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(seq.ID, seq.Name)
+	}
 
 	/*
 		f, err := os.Open("oeisdata/seq/A000/A000001.seq")
