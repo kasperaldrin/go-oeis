@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"kasperaldrin/oeis"
 	"log"
+
+	"github.com/kasperaldrin/go-oeis"
 )
 
 func main() {

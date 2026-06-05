@@ -4,12 +4,13 @@ import (
 	"io"
 	"io/fs"
 	"iter"
-	"kasperaldrin/oeis/pkg/models"
-	"kasperaldrin/oeis/pkg/services"
 	"os"
 	"path/filepath"
 	"slices"
 	"strings"
+
+	"github.com/kasperaldrin/go-oeis/pkg/models"
+	"github.com/kasperaldrin/go-oeis/pkg/services"
 )
 
 // SequenceIterator walks every .seq file under {OfflinePath}/seq/{prefix}/.

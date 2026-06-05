@@ -3,9 +3,10 @@ package services
 import (
 	"bufio"
 	"io"
-	"kasperaldrin/oeis/pkg/models"
 	"strconv"
 	"strings"
+
+	"github.com/kasperaldrin/go-oeis/pkg/models"
 )
 
 func ParseOEIS(r io.Reader) (*models.OEISSequence, error) {

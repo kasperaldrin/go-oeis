@@ -2,9 +2,10 @@ package oeis
 
 import (
 	"iter"
-	"kasperaldrin/oeis/pkg/models"
 	"net/http"
 	"time"
+
+	"github.com/kasperaldrin/go-oeis/pkg/models"
 )
 
 // OEISClientMode is the mode of the OEIS client
